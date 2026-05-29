@@ -9,6 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^2.7.0",
+    "@google/model-viewer": "^4.2.0",
+    "groq-sdk": "^1.2.1",
+    "html5-qrcode": "^2.3.8",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
