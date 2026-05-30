@@ -202,7 +202,7 @@ export default function HubDetailTanaman() {
       story: {
         intro: {
           text: "Hi, hello! *peaks from behind a big green leaf* Can you see me? I am small, and I like to hide a little bit! I cover the forest floor together with my siblings. We hold hands and just sing happy songs together. No, heehee, just kidding! But we do like to dance, yay! Some people think being small means you're not important... but that’s not true at all! Which of my secrets do you want to explore?",
-          image: "/images/Strawberry_Intro.jpeg",
+          image: "/images/Strawberry.jpeg",
           choices: [
             { id: "to_science", text: "🌱 Science: \"I’m small. But I’m important too!\"", target: "science" },
             { id: "to_culinary", text: "😋 Culinary: \"Would you like a taste?\"", target: "culinary" },
