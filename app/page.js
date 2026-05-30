@@ -4,15 +4,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function StasiunScannerUtama() {
-  const [status, setStatus] = useState('Memuat sistem scanner...');
+  const [status, setStatus] = useState('Initializing scanner system...');
   const scannerInstanceRef = useRef(null);
-  const scriptLoadedRef = useRef(false); // Flag untuk mencegah script ganda
+  const scriptLoadedRef = useRef(false); // Flag to prevent duplicate scripts
   const router = useRouter();
 
-  // Fungsi untuk menjalankan scanner
+  // Function to run the scanner
   const nyalakanKamera = (Html5QrcodeClass) => {
     try {
-      // Bersihkan instance lama jika ada
+      // Clear old instance if it exists
       if (scannerInstanceRef.current) {
         scannerInstanceRef.current.clear().catch(() => {});
       }
@@ -24,7 +24,7 @@ export default function StasiunScannerUtama() {
         { facingMode: "environment" },
         { 
           fps: 10, 
-          qrbox: { width: 230, height: 230 } 
+          qrbox: { width: 230, height: 230 }
         },
         (hasilScan) => {
           const jenisTanaman = hasilScan.trim().toLowerCase();
@@ -35,48 +35,48 @@ export default function StasiunScannerUtama() {
               router.push(`/tanaman/${jenisTanaman}`);
             });
           } else {
-            setStatus(`⚠️ QR Code tidak dikenal: "${jenisTanaman}"`);
+            setStatus(`⚠️ Unknown QR Code target: "${jenisTanaman}"`);
           }
         },
-        () => {} // Abaikan error frame (noise)
+        () => {} // Ignore frame noise errors
       ).then(() => {
-        setStatus("📷 Kamera Aktif! Silakan scan QR Code tanaman.");
+        setStatus("📷 Camera active! Please scan the plant's QR code.");
       }).catch((err) => {
         console.error(err);
-        setStatus("⚠️ Kamera diblokir/sibuk. Pastikan izin kamera sudah diberikan!");
+        setStatus("⚠️ Camera blocked or busy. Please ensure camera permissions are granted!");
       });
     } catch (e) {
-      setStatus("⚠️ Mengulang inisialisasi modul...");
+      setStatus("⚠️ Re-initializing scanner modules...");
     }
   };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Jika script sudah pernah di-load, langsung jalankan
+    // If script is already loaded, run camera immediately
     if (scriptLoadedRef.current && window.Html5Qrcode) {
       nyalakanKamera(window.Html5Qrcode);
       return;
     }
 
-    // Jika belum, suntik script ke body
+    // Inject core script into body
     const script = document.createElement('script');
     script.id = 'html5-qrcode-cdn';
     script.src = "https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js";
     script.async = true;
     
     script.onload = () => {
-      scriptLoadedRef.current = true; // Tandai script sudah aman
+      scriptLoadedRef.current = true; // Mark script as safely loaded
       if (window.Html5Qrcode) {
         nyalakanKamera(window.Html5Qrcode);
       }
     };
 
-    script.onerror = () => setStatus("❌ Gagal memuat library scanner.");
+    script.onerror = () => setStatus("❌ Failed to load core scanner library.");
     
     document.body.appendChild(script);
 
-    // Cleanup saat user pindah halaman
+    // Cleanup when user leaves the page
     return () => {
       if (scannerInstanceRef.current && scannerInstanceRef.current.isScanning) {
         scannerInstanceRef.current.stop().catch(() => {});
@@ -84,89 +84,112 @@ export default function StasiunScannerUtama() {
     };
   }, []);
 
-  const handleBypass = (rute) => {
-    if (scannerInstanceRef.current && scannerInstanceRef.current.isScanning) {
-      scannerInstanceRef.current.stop().finally(() => router.push(rute));
-    } else {
-      router.push(rute);
-    }
-  };
-
   return (
     <div style={{
-      padding: '30px 20px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      backgroundColor: 'transparent', // Menghapus latar belakang hitam pekat
-      fontFamily: 'sans-serif'
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      overflow: 'hidden',
+      backgroundColor: '#000000',
+      fontFamily: 'sans-serif',
+      zIndex: 9999
     }}>
-      {/* HEADER UTAMA */}
-      <div style={{ marginBottom: '25px', textAlign: 'center' }}>
-        <h1 style={{ color: '#2e7d32', margin: '0 0 5px 0', fontSize: '24px', fontWeight: 'bold' }}>
-          🌿 Reizend Voedselbos
-        </h1>
-        <p style={{ color: '#2e4d2e', fontSize: '13px', margin: 0, fontWeight: '600' }}>
-          Interactive Ecosystem Guide Station
-        </p>
-      </div>
+      
+      {/* GLOBAL CSS OVERRIDE UNTUK MEMAKSA ELEMEN INTERNAL LIBRARY MENJADI FULL LAYAR */}
+      <style dangerouslySetInnerHTML={{__html: `
+        html, body, main, #__next {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          overflow: hidden !important;
+          background-color: #000000 !important;
+        }
 
-      <div style={{ width: '100%', maxWidth: '360px' }}>
-        {/* CONTAINER SCANNER QR (GLASSMORPHISM STYLE) */}
-        <div 
-          id="reader-hutan-utama" 
-          style={{ 
-            backgroundColor: 'rgba(255, 255, 255, 0.65)', 
-            backdropFilter: 'blur(10px)', 
-            borderRadius: '16px', 
-            overflow: 'hidden', 
-            border: '2px dashed #4CAF50', 
-            minHeight: '260px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.05)'
-          }}
-        ></div>
+        /* Paksa elemen video bawaan library melar penuh menutup layar tanpa merusak engine scanner */
+        #reader-hutan-utama video {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+        }
+
+        /* Bersihkan sisa rendering UI control bawaan library jika tidak sengaja muncul */
+        #reader-hutan-utama button,
+        #reader-hutan-utama select,
+        #reader-hutan-utama span {
+          display: none !important;
+        }
+      `}} />
+      
+      {/* CONTAINER QR SCANNER - DIUBAH MENJADI FULLSCREEN */}
+      <div 
+        id="reader-hutan-utama" 
+        style={{ 
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 1,
+          backgroundColor: '#000000'
+        }}
+      ></div>
+      
+      {/* HUD OVERLAY UI CONTAINER (Gaya Konten Tetap Sama & Transparan di Atas Video) */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '40px 20px',
+        boxSizing: 'border-box',
+        pointerEvents: 'none' /* Supaya ketukan jari di layar tembus langsung ke sistem kamera */
+      }}>
         
-        {/* STATUS KETERANGAN SCANNER */}
-        <p style={{ fontSize: '13px', color: '#d32f2f', marginTop: '15px', textAlign: 'center', fontWeight: 'bold' }}>
-          {status}
-        </p>
-
-        {/* CONTAINER TOMBOL SIMULASI (BYPASS) */}
-        <div style={{ marginTop: '35px', borderTop: '1px solid rgba(76, 175, 80, 0.2)', paddingTop: '20px' }}>
-          <p style={{ fontSize: '11px', color: '#2e7d32', marginBottom: '12px', fontWeight: 'bold', letterSpacing: '0.5px' }}>
-            ⚡ QUICK SIMULATION:
+        {/* MAIN HEADER */}
+        <div style={{ textAlign: 'center', pointerEvents: 'auto' }}>
+          <h1 style={{ color: '#4CAF50', margin: '0 0 5px 0', fontSize: '24px', fontWeight: 'bold', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+            🌿 Reizend Voedselbos
+          </h1>
+          <p style={{ color: '#a5d6a7', fontSize: '13px', margin: 0, fontWeight: '600', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
+            Interactive Ecosystem Guide Station
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            
-            {/* BUTTON CHESTNUT */}
-            <button 
-              onClick={() => handleBypass('/tanaman/chestnut')} 
-              style={{ padding: '14px', backgroundColor: '#ffffff', color: '#2e7d32', border: '1px solid #c8e6c9', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
-            >
-              🌳 <span style={{ flex: 1 }}>Go to Chestnut</span> ➔
-            </button>
-            
-            {/* BUTTON STRAWBERRY */}
-            <button 
-              onClick={() => handleBypass('/tanaman/strawberry')} 
-              style={{ padding: '14px', backgroundColor: '#ffffff', color: '#c62828', border: '1px solid #ffcdd2', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
-            >
-              🍓 <span style={{ flex: 1 }}>Go to Strawberry</span> ➔
-            </button>
-            
-            {/* BUTTON MYCELIUM */}
-            <button 
-              onClick={() => handleBypass('/tanaman/mycelium')} 
-              style={{ padding: '14px', backgroundColor: '#ffffff', color: '#1565c0', border: '1px solid #bbdefb', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
-            >
-              🍄 <span style={{ flex: 1 }}>Go to Mycelium</span> ➔
-            </button>
-
-          </div>
         </div>
+
+        {/* CONTAINER KOTAK TENGAH (Sekarang Berfungsi Sebagai Lapisan Bingkai Target Visual Saja) */}
+        <div style={{
+          width: '240px',
+          height: '240px',
+          border: '2px dashed #4CAF50',
+          borderRadius: '16px',
+          boxShadow: '0 0 0 4000px rgba(0, 0, 0, 0.45)', /* Trik menciptakan efek redup di luar kotak target */
+          boxSizing: 'border-box'
+        }}></div>
+        
+        {/* SYSTEM STATUS MESSAGES */}
+        <div style={{ pointerEvents: 'auto', width: '100%', maxWidth: '340px' }}>
+          <p style={{ 
+            fontSize: '13px', 
+            color: status.includes('⚠️') || status.includes('❌') ? '#ff5252' : '#4CAF50', 
+            textAlign: 'center', 
+            fontWeight: 'bold',
+            margin: '0 0 30px 0', /* Memberikan margin bottom aman agar terangkat dari bar navigasi HP */
+            textShadow: '0 2px 4px rgba(0,0,0,1)'
+          }}>
+            {status}
+          </p>
+        </div>
+
       </div>
+
     </div>
   );
 }
