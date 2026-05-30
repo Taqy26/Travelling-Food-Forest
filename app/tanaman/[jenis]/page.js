@@ -61,7 +61,7 @@ export default function HubDetailTanaman() {
       },
       story: {
         intro: {
-          text: "Welcome, traveler. I am the ancient Sweet Chestnut tree. For over a century, I have stood as a giant protector of this forest. What secrets of the ages would you like to unlock today?",
+          text: "It is autumn. Time to harvest. Look at what I have to offer! It is lying at your feet, looking like little hedgehogs. Sharp spines, rough husks. Take a good look at what I have been protecting… it’s my edibles! Wanna try?",
           image: "/images/chestnut_intro.jpeg",
           choices: [
             { id: "to_culinary", text: "😋 Tell me about Culinary", target: "culinary" },
