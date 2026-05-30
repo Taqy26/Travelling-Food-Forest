@@ -1,142 +1,122 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
+  /* Variabel warna tema hijau cerah permanen (tanpa dark mode) */
+  --background: transparent;          /* Menyerahkan background ke foto hutan layout.js */
+  --foreground: rgba(255, 255, 255, 0.9); /* Kotak konten putih transparan estetik */
 
-  --text-primary: #000;
-  --text-secondary: #666;
+  --text-primary: #0a2a0a;            /* Teks utama Hijau Tua sangat kontras */
+  --text-secondary: #2e4d2e;          /* Teks sekunder Hijau Daun Redup */
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
+  --button-primary-bg: #2e7d32;       /* Hijau Forest untuk tombol utama */
+  --button-primary-hover: #1b5e20;     /* Hijau lebih gelap saat di-hover */
+  
+  --button-secondary-bg: #f0f7eb;     /* Hijau sangat muda untuk tombol sekunder */
+  --button-secondary-hover: #e8f5e9;
+  --button-secondary-border: #a5d6a7; /* Border hijau pastel */
 
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-geist-sans), sans-serif;
   background-color: var(--background);
+  min-height: 100vh;
 }
 
 .main {
   display: flex;
   flex: 1;
   width: 100%;
-  max-width: 800px;
+  max-width: 480px; /* Samakan dengan layout utama HP */
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center; /* Posisikan konten di tengah */
+  justify-content: center;
   background-color: var(--foreground);
-  padding: 120px 60px;
+  padding: 40px 24px; /* Padding disesuaikan agar tidak terlalu longgar di HP */
+  backdrop-filter: blur(8px); /* Efek blur kaca di atas foto hutan */
+  border-radius: 20px;
+  text-align: center;
+  gap: 32px;
 }
 
 .intro {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
 }
 
 .intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
+  width: 100%;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: -1px;
   text-wrap: balance;
   color: var(--text-primary);
 }
 
 .intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
+  width: 100%;
+  font-size: 16px;
+  line-height: 26px;
   text-wrap: balance;
   color: var(--text-secondary);
 }
 
 .intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+  font-weight: 600;
+  color: var(--button-primary-bg);
+  text-decoration: underline;
 }
 
 .ctas {
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Tombol bertumpuk vertikal agar lebih ramah jempol HP */
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 15px;
 }
 
 .ctas a {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
+  height: 48px; /* Lebih tinggi sedikit agar mudah ditekan di HP */
+  padding: 0 24px;
+  border-radius: 12px; /* Border radius melengkung modern, bukan oval kaku */
   border: 1px solid transparent;
-  transition: 0.2s;
+  transition: all 0.2s ease;
   cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  width: 100%; /* Penuhi lebar container */
+  font-weight: 600;
 }
 
 a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+  background: var(--button-primary-bg);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
 }
 
 a.secondary {
+  background: var(--button-secondary-bg);
+  color: var(--text-primary);
   border-color: var(--button-secondary-border);
 }
 
-/* Enable hover only on non-touch devices */
+/* Interaksi Hover (Desktop friendly) */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--button-primary-hover);
-    border-color: transparent;
+    transform: translateY(-1px);
   }
 
   a.secondary:hover {
     background: var(--button-secondary-hover);
-    border-color: transparent;
+    border-color: var(--button-primary-bg);
   }
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
-}
+/* Bagian Media Query Dark Mode bawaan Next.js lama TELAH DIHAPUS 
+   agar warna sistem konsisten hijau cerah di perangkat manapun */

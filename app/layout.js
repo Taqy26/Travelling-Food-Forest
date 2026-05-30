@@ -11,7 +11,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Update metadata agar sesuai dengan tema pameran/hackathon kamu
 export const metadata = {
   title: "🌿 Reizend Voedselbos - Interactive Guide",
   description: "AR & AI Branching Storytelling Experience",
@@ -23,16 +22,19 @@ export default function RootLayout({ children }) {
       <body style={{
         margin: 0,
         padding: 0,
-        backgroundColor: "#0c110d", // Warna dasar hijau hutan gelap murni (sangat premium)
-        color: "#f0f5f1",           // Warna teks putih pudar alami agar mata tidak cepat lelah
+        // Menggunakan foto hutan sebagai background global
+        // Pastikan file gambarnya ada di public/images/forest_bg.jpg
+        backgroundImage: "url('/images/forest_bg.jpg')", 
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         WebkitFontSmoothing: "antialiased",
+        color: "#0a2a0a", // Teks hijau tua agar kontras dengan background cerah
       }}>
-        {/* Container pembungkus utama khusus device HP (maksimal lebar 480px) 
-            Ini trik rahasia agar saat juri membuka lewat laptop ataupun HP, 
-            tampilannya akan tetap presisi, rapi, dan terpusat di tengah seperti aplikasi native */}
         <main style={{
           width: "100%",
           maxWidth: "480px", 
@@ -40,8 +42,11 @@ export default function RootLayout({ children }) {
           minHeight: "100vh",
           boxSizing: "border-box",
           position: "relative",
-          backgroundColor: "#111612", // Lapisan hijau gelap sekunder untuk area konten
-          boxShadow: "0 0 30px rgba(0,0,0,0.6)" // Efek bayangan estetik di kanan-kiri layar
+          // Warna putih pudar transparan untuk area konten agar teks mudah dibaca
+          backgroundColor: "rgba(255, 255, 255, 0.85)", 
+          backdropFilter: "blur(5px)", // Efek blur estetik
+          boxShadow: "0 0 20px rgba(0,0,0,0.2)",
+          padding: "20px"
         }}>
           {children}
         </main>

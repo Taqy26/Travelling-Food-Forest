@@ -100,48 +100,70 @@ export default function StasiunScannerUtama() {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      backgroundColor: '#0c0f0d',
-      color: '#fff',
+      backgroundColor: 'transparent', // Menghapus latar belakang hitam pekat
       fontFamily: 'sans-serif'
     }}>
+      {/* HEADER UTAMA */}
       <div style={{ marginBottom: '25px', textAlign: 'center' }}>
-        <h1 style={{ color: '#4CAF50', margin: '0 0 5px 0', fontSize: '24px', fontWeight: 'bold' }}>
+        <h1 style={{ color: '#2e7d32', margin: '0 0 5px 0', fontSize: '24px', fontWeight: 'bold' }}>
           🌿 Reizend Voedselbos
         </h1>
-        <p style={{ color: '#88998a', fontSize: '13px', margin: 0 }}>Interactive Ecosystem Guide Station</p>
+        <p style={{ color: '#2e4d2e', fontSize: '13px', margin: 0, fontWeight: '600' }}>
+          Interactive Ecosystem Guide Station
+        </p>
       </div>
 
       <div style={{ width: '100%', maxWidth: '360px' }}>
-        {/* Container Scanner - Pastikan id ini sesuai */}
+        {/* CONTAINER SCANNER QR (GLASSMORPHISM STYLE) */}
         <div 
           id="reader-hutan-utama" 
           style={{ 
-            backgroundColor: '#131814', 
+            backgroundColor: 'rgba(255, 255, 255, 0.65)', 
+            backdropFilter: 'blur(10px)', 
             borderRadius: '16px', 
             overflow: 'hidden', 
             border: '2px dashed #4CAF50', 
-            minHeight: '260px'
+            minHeight: '260px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.05)'
           }}
         ></div>
         
-        <p style={{ fontSize: '13px', color: '#FFEB3B', marginTop: '15px', textAlign: 'center' }}>
+        {/* STATUS KETERANGAN SCANNER */}
+        <p style={{ fontSize: '13px', color: '#d32f2f', marginTop: '15px', textAlign: 'center', fontWeight: 'bold' }}>
           {status}
         </p>
 
-        <div style={{ marginTop: '35px', borderTop: '1px solid #1f2821', paddingTop: '15px' }}>
-          <p style={{ fontSize: '11px', color: '#576f5b', marginBottom: '10px', fontWeight: 'bold' }}>
+        {/* CONTAINER TOMBOL SIMULASI (BYPASS) */}
+        <div style={{ marginTop: '35px', borderTop: '1px solid rgba(76, 175, 80, 0.2)', paddingTop: '20px' }}>
+          <p style={{ fontSize: '11px', color: '#2e7d32', marginBottom: '12px', fontWeight: 'bold', letterSpacing: '0.5px' }}>
             ⚡ QUICK SIMULATION:
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <button onClick={() => handleBypass('/tanaman/chestnut')} style={{ padding: '14px', backgroundColor: '#17221a', color: '#4CAF50', border: '1px solid #2d4433', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>
-              🌳 Go to Chestnut
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            
+            {/* BUTTON CHESTNUT */}
+            <button 
+              onClick={() => handleBypass('/tanaman/chestnut')} 
+              style={{ padding: '14px', backgroundColor: '#ffffff', color: '#2e7d32', border: '1px solid #c8e6c9', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
+            >
+              🌳 <span style={{ flex: 1 }}>Go to Chestnut</span> ➔
             </button>
-            <button onClick={() => handleBypass('/tanaman/strawberry')} style={{ padding: '14px', backgroundColor: '#241717', color: '#ff5252', border: '1px solid #442d2d', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>
-              🍓 Go to Strawberry
+            
+            {/* BUTTON STRAWBERRY */}
+            <button 
+              onClick={() => handleBypass('/tanaman/strawberry')} 
+              style={{ padding: '14px', backgroundColor: '#ffffff', color: '#c62828', border: '1px solid #ffcdd2', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
+            >
+              🍓 <span style={{ flex: 1 }}>Go to Strawberry</span> ➔
             </button>
-            <button onClick={() => handleBypass('/tanaman/mycelium')} style={{ padding: '14px', backgroundColor: '#171d24', color: '#29b6f6', border: '1px solid #2d3b44', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>
-              🍄 Go to Mycelium
+            
+            {/* BUTTON MYCELIUM */}
+            <button 
+              onClick={() => handleBypass('/tanaman/mycelium')} 
+              style={{ padding: '14px', backgroundColor: '#ffffff', color: '#1565c0', border: '1px solid #bbdefb', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
+            >
+              🍄 <span style={{ flex: 1 }}>Go to Mycelium</span> ➔
             </button>
+
           </div>
         </div>
       </div>

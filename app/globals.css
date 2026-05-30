@@ -1,17 +1,15 @@
+/* 1. Paksa warna hijau cerah sebagai dasar */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f0f7eb; /* Hijau sangat muda/cerah */
+  --foreground: #0a2a0a; /* Hijau tua untuk teks */
+  --accent-green: #4caf50;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* 2. Hapus blok @media dark agar tema tidak berubah-ubah sendiri */
 
 html {
   height: 100%;
+  color-scheme: light; /* Paksa mode terang */
 }
 
 html,
@@ -25,7 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,12 +36,15 @@ body {
 }
 
 a {
-  color: inherit;
+  color: var(--accent-green);
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* 3. Tambahkan gaya untuk card/konten agar estetik di atas background cerah */
+.content-box {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  padding: 20px;
+  border-radius: 15px;
+  margin: 10px;
 }

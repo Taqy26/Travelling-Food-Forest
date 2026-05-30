@@ -21,22 +21,22 @@ export default function HubDetailTanaman() {
   const [isAiTyping, setIsAiTyping] = useState(false);
 
   useEffect(() => {
-  const unlockAudio = () => {
-    const silent = new SpeechSynthesisUtterance("");
-    window.speechSynthesis.speak(silent);
-    // Hapus event listener setelah diklik sekali
-    document.removeEventListener('click', unlockAudio);
-    document.removeEventListener('touchstart', unlockAudio);
-  };
+    const unlockAudio = () => {
+      const silent = new SpeechSynthesisUtterance("");
+      window.speechSynthesis.speak(silent);
+      // Hapus event listener setelah diklik sekali
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    };
 
-  document.addEventListener('click', unlockAudio);
-  document.addEventListener('touchstart', unlockAudio);
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
 
-  return () => {
-    document.removeEventListener('click', unlockAudio);
-    document.removeEventListener('touchstart', unlockAudio);
-  };
-}, []);
+    return () => {
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    };
+  }, []);
 
 
   // Script Google <model-viewer> di-load otomatis saat komponen aktif
@@ -430,24 +430,24 @@ export default function HubDetailTanaman() {
   }, [currentNode, activeTab, jenisTanaman]);
 
   // --- HANDLER NAVIGASI CERITA BERCABANG ---
-  
-const handleChoiceClick = (target) => {
-  // 1. Ubah node cerita
-  setCurrentNode(target);
-  
-  // 2. AMBIL DATA TEKS DAN LANGSUNG BICARA
-  // Cari data dari databaseTanaman untuk node target
-  const nextData = currentPlant.story[target];
-  if (nextData) {
-    speakText(nextData.text);
-  }
-  
-  // 3. Tambahan redirect jika perlu
-  if (target === 'redirect_strawberry') router.push('/tanaman/strawberry');
-  else if (target === 'redirect_mycelium') router.push('/tanaman/mycelium');
-  else if (target === 'redirect_chestnut') router.push('/tanaman/chestnut');
-  else if (target === 'redirect_scanner') router.push('/');
-};
+
+  const handleChoiceClick = (target) => {
+    // 1. Ubah node cerita
+    setCurrentNode(target);
+
+    // 2. AMBIL DATA TEKS DAN LANGSUNG BICARA
+    // Cari data dari databaseTanaman untuk node target
+    const nextData = currentPlant.story[target];
+    if (nextData) {
+      speakText(nextData.text);
+    }
+
+    // 3. Tambahan redirect jika perlu
+    if (target === 'redirect_strawberry') router.push('/tanaman/strawberry');
+    else if (target === 'redirect_mycelium') router.push('/tanaman/mycelium');
+    else if (target === 'redirect_chestnut') router.push('/tanaman/chestnut');
+    else if (target === 'redirect_scanner') router.push('/');
+  };
   // --- PROSES TANYA JAWAB LIVE DENGAN GEMINI AI ---
   // ========================================================
   const handleSendChatMessage = async (e) => {
@@ -523,21 +523,31 @@ const handleChoiceClick = (target) => {
 
       {/* HEADER PROFIL TANAMAN */}
       <div style={{ textAlign: 'center', marginBottom: '15px' }}>
-        <h2 style={{ color: '#4CAF50', margin: '5px 0', fontSize: '20px' }}>{currentPlant.emoji} {currentPlant.nama}</h2>
-        <span style={{ backgroundColor: '#2e2e2e', color: '#FFEB3B', padding: '3px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
+        <h2 style={{ color: '#2e7d32', margin: '5px 0', fontSize: '20px', fontWeight: 'bold' }}>{currentPlant.emoji} {currentPlant.nama}</h2>
+        <span style={{ backgroundColor: '#e8f5e9', color: '#2e7d32', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold', border: '1px solid #a5d6a7' }}>
           {currentPlant.umur}
         </span>
       </div>
 
       {/* SEGMENTED CONTROL / NAVIGASI TAB */}
-      <div style={{ display: 'flex', width: '100%', backgroundColor: '#1e1e1e', borderRadius: '10px', padding: '3px', marginBottom: '15px' }}>
+      <div style={{ display: 'flex', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.08)', backdropFilter: 'blur(4px)', borderRadius: '10px', padding: '4px', marginBottom: '15px' }}>
         {['ar', 'story', 'asking'].map((tab) => (
           <button
             key={tab}
             onClick={() => { setActiveTab(tab); if (tab === 'story') setCurrentNode('intro'); }}
             style={{
-              flex: 1, padding: '10px 5px', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '11px', cursor: 'pointer',
-              backgroundColor: activeTab === tab ? '#4CAF50' : 'transparent', color: '#fff', textTransform: 'uppercase'
+              flex: 1, 
+              padding: '10px 5px', 
+              border: 'none', 
+              borderRadius: '8px', 
+              fontWeight: 'bold', 
+              fontSize: '11px', 
+              cursor: 'pointer',
+              // AKTIF: Hijau gelap kontras, MATI: Transparan dengan teks hijau tua agar tidak hilang/putih
+              backgroundColor: activeTab === tab ? '#2e7d32' : 'transparent', 
+              color: activeTab === tab ? '#ffffff' : '#0a2a0a', 
+              textTransform: 'uppercase',
+              transition: 'all 0.2s ease'
             }}
           >
             {tab === 'ar' ? '🌐 AR Model' : tab === 'story' ? '📖 Story' : '💬 Ask Plant'}
@@ -550,7 +560,7 @@ const handleChoiceClick = (target) => {
           ========================================== */}
       {activeTab === 'ar' && (
         <div style={{ width: '100%', textAlign: 'center' }}>
-          <div style={{ width: '100%', height: '320px', backgroundColor: '#161a17', borderRadius: '15px', border: '1px solid #2d3830', overflow: 'hidden', position: 'relative' }}>
+          <div style={{ width: '100%', height: '320px', backgroundColor: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(8px)', borderRadius: '15px', border: '1px solid rgba(76, 175, 80, 0.2)', overflow: 'hidden', position: 'relative' }}>
 
             {/* Tag Web Komponen Resmi <model-viewer> */}
             <model-viewer
@@ -563,13 +573,13 @@ const handleChoiceClick = (target) => {
               auto-rotate
               style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
             >
-              <button slot="ar-button" style={{ position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', padding: '10px 20px', backgroundColor: '#FF9800', border: 'none', borderRadius: '20px', color: '#fff', fontSize: '12px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.4)' }}>
+              <button slot="ar-button" style={{ position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', padding: '10px 20px', backgroundColor: '#FF9800', border: 'none', borderRadius: '20px', color: '#fff', fontSize: '12px', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.15)' }}>
                 🚀 ACTIVATE AR MODE
               </button>
             </model-viewer>
 
           </div>
-          <p style={{ fontSize: '12px', color: '#88998a', marginTop: '12px', lineHeight: '1.4' }}>
+          <p style={{ fontSize: '12px', color: '#2e4d2e', marginTop: '12px', lineHeight: '1.4', fontWeight: '500' }}>
             Swipe to rotate the 3D asset or tap the orange button on mobile devices to project the plant onto your real floor!
           </p>
         </div>
@@ -582,22 +592,22 @@ const handleChoiceClick = (target) => {
         <div style={{ width: '100%' }}>
 
           {/* DISPLAY FOTO DINAMIS TIAP CABANG CERITA */}
-          <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '15px', border: '1px solid #333', backgroundColor: '#222', position: 'relative' }}>
+          <div style={{ width: '100%', height: '180px', borderRadius: '12px', overflow: 'hidden', marginBottom: '15px', border: '1px solid rgba(76, 175, 80, 0.2)', backgroundColor: 'rgba(255, 255, 255, 0.5)', position: 'relative' }}>
             <img
               src={currentStoryNode.image}
               alt="Plant condition stage"
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'contain' // Gambar mengecil agar muat utuh, sisa ruang kosong diberi warna background
+                objectFit: 'contain'
               }}
               onError={(e) => { e.target.src = "https://via.placeholder.com/400x200?text=Aset+Gambar+Belum+Disalin"; }}
             />
           </div>
 
           {/* TEKS DIALOG NARASI */}
-          <div style={{ backgroundColor: '#111c24', borderRadius: '12px', padding: '15px', borderLeft: '4px solid #29b6f6', marginBottom: '15px' }}>
-            <p style={{ fontSize: '13px', lineHeight: '1.5', margin: 0, color: '#e0e8f0', textAlign: 'justify' }}>
+          <div style={{ backgroundColor: '#f1f8e9', borderRadius: '12px', padding: '15px', borderLeft: '4px solid #4caf50', marginBottom: '15px', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
+            <p style={{ fontSize: '13.5px', lineHeight: '1.6', margin: 0, color: '#0a2a0a', textAlign: 'justify', fontWeight: '500' }}>
               {currentStoryNode.text}
             </p>
           </div>
@@ -608,10 +618,10 @@ const handleChoiceClick = (target) => {
               <button
                 key={choice.id}
                 onClick={() => handleChoiceClick(choice.target)}
-                style={{ width: '100%', padding: '12px', backgroundColor: '#222a24', color: '#fff', border: '1px solid #334438', borderRadius: '8px', fontSize: '12px', textAlign: 'left', cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}
+                style={{ width: '100%', padding: '14px 12px', backgroundColor: '#ffffff', color: '#0a2a0a', border: '1px solid #c8e6c9', borderRadius: '10px', fontSize: '12.5px', textAlign: 'left', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}
               >
                 <span>{choice.text}</span>
-                <span style={{ color: '#4CAF50' }}>➔</span>
+                <span style={{ color: '#2e7d32' }}>➔</span>
               </button>
             ))}
           </div>
@@ -619,24 +629,58 @@ const handleChoiceClick = (target) => {
       )}
 
       {/* ==========================================
-          TAB CONTENT 3: ASKING PLANT PANEL
+          TAB CONTENT 3: ASKING PLANT PANEL (KOTAK AI)
           ========================================== */}
       {activeTab === 'asking' && (
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '340px', backgroundColor: '#161a17', borderRadius: '12px', overflow: 'hidden', border: '1px solid #253028' }}>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '360px', backgroundColor: 'rgba(255, 255, 255, 0.65)', backdropFilter: 'blur(10px)', borderRadius: '15px', overflow: 'hidden', border: '1px solid rgba(76, 175, 80, 0.25)', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+          
+          {/* Area Riwayat Bubble Chat */}
           <div style={{ flex: 1, padding: '12px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ alignSelf: 'flex-start', backgroundColor: '#252e27', padding: '8px 12px', borderRadius: '10px', fontSize: '12px', maxWidth: '85%' }}>
-              Hello human friend! Ask me anything about my roots, leaf functions, or eco ecosystem! 🌳
+            
+            {/* Pesan Sambutan Awal dari Bot Tanaman */}
+            <div style={{ alignSelf: 'flex-start', backgroundColor: '#e8f5e9', color: '#0a2a0a', padding: '10px 14px', borderRadius: '14px 14px 14px 4px', fontSize: '12.5px', maxWidth: '85%', fontWeight: '500', border: '1px solid #c8e6c9', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+              Hello human friend! Ask me anything about my roots, leaf functions, or ecosystem! 🌳
             </div>
+
+            {/* Iterasi Chat Messages */}
             {chatMessages.map((msg, i) => (
-              <div key={i} style={{ alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start', backgroundColor: msg.role === 'user' ? '#4CAF50' : '#1b2a4a', padding: '8px 12px', borderRadius: '10px', fontSize: '12px', maxWidth: '85%' }}>
+              <div 
+                key={i} 
+                style={{ 
+                  alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start', 
+                  backgroundColor: msg.role === 'user' ? '#2e7d32' : '#e8f5e9', 
+                  color: msg.role === 'user' ? '#ffffff' : '#0a2a0a', 
+                  padding: '10px 14px', 
+                  borderRadius: msg.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px', 
+                  fontSize: '12.5px', 
+                  maxWidth: '85%',
+                  fontWeight: '500',
+                  border: msg.role === 'user' ? 'none' : '1px solid #c8e6c9',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+                }}
+              >
                 {msg.text}
               </div>
             ))}
-            {isAiTyping && <div style={{ fontSize: '11px', color: '#666', fontStyle: 'italic' }}>Plant is thinking...</div>}
+            
+            {isAiTyping && <div style={{ fontSize: '11px', color: '#557a55', fontStyle: 'italic', paddingLeft: '5px' }}>Plant is thinking...</div>}
           </div>
-          <form onSubmit={handleSendChatMessage} style={{ display: 'flex', padding: '8px', backgroundColor: '#0f1310', borderTop: '1px solid #253028' }}>
-            <input type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder="Type a message..." style={{ flex: 1, padding: '10px', backgroundColor: '#222', border: 'none', borderRadius: '6px', color: '#fff', fontSize: '12px', outline: 'none' }} />
-            <button type="submit" style={{ marginLeft: '6px', padding: '0 14px', backgroundColor: '#4CAF50', border: 'none', borderRadius: '6px', color: '#fff', fontWeight: 'bold', fontSize: '12px' }}>Send</button>
+
+          {/* Form Input Kirim Pesan di Bagian Bawah */}
+          <form onSubmit={handleSendChatMessage} style={{ display: 'flex', padding: '10px', backgroundColor: '#ffffff', borderTop: '1px solid rgba(76, 175, 80, 0.15)' }}>
+            <input 
+              type="text" 
+              value={chatInput} 
+              onChange={(e) => setChatInput(e.target.value)} 
+              placeholder="Type a message to plant..." 
+              style={{ flex: 1, padding: '10px 14px', backgroundColor: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: '8px', color: '#0a2a0a', fontSize: '12.5px', outline: 'none' }} 
+            />
+            <button 
+              type="submit" 
+              style={{ marginLeft: '8px', padding: '0 16px', backgroundColor: '#2e7d32', border: 'none', borderRadius: '8px', color: '#fff', fontWeight: 'bold', fontSize: '12.5px', cursor: 'pointer' }}
+            >
+              Send
+            </button>
           </form>
         </div>
       )}
@@ -644,7 +688,7 @@ const handleChoiceClick = (target) => {
       {/* TOMBOL RETRIGGER SCAN BARU */}
       <button
         onClick={() => { if (typeof window !== 'undefined' && window.speechSynthesis) window.speechSynthesis.cancel(); router.push('/'); }}
-        style={{ width: '100%', padding: '12px', backgroundColor: '#1a1f1b', color: '#FFEB3B', border: '1px solid #38423a', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', marginTop: '20px' }}
+        style={{ width: '100%', padding: '14px', backgroundColor: '#f44336', color: '#ffffff', border: 'none', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer', marginTop: '25px', boxShadow: '0 4px 10px rgba(244,67,54,0.2)' }}
       >
         📷 Back to Scanner Station
       </button>
