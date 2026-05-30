@@ -24,7 +24,7 @@ export default function StasiunScannerUtama() {
         { facingMode: "environment" },
         { 
           fps: 10, 
-          qrbox: { width: 230, height: 230 }
+          qrbox: { width: 230, height: 230 } 
         },
         (hasilScan) => {
           const jenisTanaman = hasilScan.trim().toLowerCase();
@@ -86,110 +86,45 @@ export default function StasiunScannerUtama() {
 
   return (
     <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      overflow: 'hidden',
-      backgroundColor: '#000000',
-      fontFamily: 'sans-serif',
-      zIndex: 9999
+      padding: '30px 20px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      backgroundColor: 'transparent',
+      fontFamily: 'sans-serif'
     }}>
-      
-      {/* GLOBAL CSS OVERRIDE UNTUK MEMAKSA ELEMEN INTERNAL LIBRARY MENJADI FULL LAYAR */}
-      <style dangerouslySetInnerHTML={{__html: `
-        html, body, main, #__next {
-          margin: 0 !important;
-          padding: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
-          overflow: hidden !important;
-          background-color: #000000 !important;
-        }
-
-        /* Paksa elemen video bawaan library melar penuh menutup layar tanpa merusak engine scanner */
-        #reader-hutan-utama video {
-          width: 100% !important;
-          height: 100% !important;
-          object-fit: cover !important;
-        }
-
-        /* Bersihkan sisa rendering UI control bawaan library jika tidak sengaja muncul */
-        #reader-hutan-utama button,
-        #reader-hutan-utama select,
-        #reader-hutan-utama span {
-          display: none !important;
-        }
-      `}} />
-      
-      {/* CONTAINER QR SCANNER - DIUBAH MENJADI FULLSCREEN */}
-      <div 
-        id="reader-hutan-utama" 
-        style={{ 
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 1,
-          backgroundColor: '#000000'
-        }}
-      ></div>
-      
-      {/* HUD OVERLAY UI CONTAINER (Gaya Konten Tetap Sama & Transparan di Atas Video) */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '40px 20px',
-        boxSizing: 'border-box',
-        pointerEvents: 'none' /* Supaya ketukan jari di layar tembus langsung ke sistem kamera */
-      }}>
-        
-        {/* MAIN HEADER */}
-        <div style={{ textAlign: 'center', pointerEvents: 'auto' }}>
-          <h1 style={{ color: '#4CAF50', margin: '0 0 5px 0', fontSize: '24px', fontWeight: 'bold', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-            🌿 Reizend Voedselbos
-          </h1>
-          <p style={{ color: '#a5d6a7', fontSize: '13px', margin: 0, fontWeight: '600', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
-            Interactive Ecosystem Guide Station
-          </p>
-        </div>
-
-        {/* CONTAINER KOTAK TENGAH (Sekarang Berfungsi Sebagai Lapisan Bingkai Target Visual Saja) */}
-        <div style={{
-          width: '240px',
-          height: '240px',
-          border: '2px dashed #4CAF50',
-          borderRadius: '16px',
-          boxShadow: '0 0 0 4000px rgba(0, 0, 0, 0.45)', /* Trik menciptakan efek redup di luar kotak target */
-          boxSizing: 'border-box'
-        }}></div>
-        
-        {/* SYSTEM STATUS MESSAGES */}
-        <div style={{ pointerEvents: 'auto', width: '100%', maxWidth: '340px' }}>
-          <p style={{ 
-            fontSize: '13px', 
-            color: status.includes('⚠️') || status.includes('❌') ? '#ff5252' : '#4CAF50', 
-            textAlign: 'center', 
-            fontWeight: 'bold',
-            margin: '0 0 30px 0', /* Memberikan margin bottom aman agar terangkat dari bar navigasi HP */
-            textShadow: '0 2px 4px rgba(0,0,0,1)'
-          }}>
-            {status}
-          </p>
-        </div>
-
+      {/* MAIN HEADER */}
+      <div style={{ marginBottom: '25px', textAlign: 'center' }}>
+        <h1 style={{ color: '#2e7d32', margin: '0 0 5px 0', fontSize: '24px', fontWeight: 'bold' }}>
+          🌿 Reizend Voedselbos
+        </h1>
+        <p style={{ color: '#2e4d2e', fontSize: '13px', margin: 0, fontWeight: '600' }}>
+          Interactive Ecosystem Guide Station
+        </p>
       </div>
 
+      <div style={{ width: '100%', maxWidth: '360px' }}>
+        {/* QR SCANNER CONTAINER (GLASSMORPHISM STYLE) */}
+        <div 
+          id="reader-hutan-utama" 
+          style={{ 
+            backgroundColor: 'rgba(255, 255, 255, 0.65)', 
+            backdropFilter: 'blur(10px)', 
+            borderRadius: '16px', 
+            overflow: 'hidden', 
+            border: '2px dashed #4CAF50', 
+            minHeight: '260px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.05)'
+          }}
+        ></div>
+        
+        {/* SYSTEM STATUS MESSAGES */}
+        <p style={{ fontSize: '13px', color: '#d32f2f', marginTop: '15px', textAlign: 'center', fontWeight: 'bold' }}>
+          {status}
+        </p>
+      </div>
     </div>
   );
 }
