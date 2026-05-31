@@ -334,13 +334,13 @@ export default function HubDetailTanaman() {
       model3D: "/models/Mycelium.glb",
       // 🤖 KARAKTER: Entitas kuno, magis, surealis, berbisik (whispering), dan sangat misterius
       voiceConfig: {
-        rate: 0.80,  // Berbicara lambat dan mengalun seperti bisikan spiritual 
-        pitch: 0.65,  // Nada suara rendah dan datar untuk menciptakan atmosfer magis bawah tanah 
+        rate: 0.75,  // Sedikit diperlambat agar jeda titik-titik (...) memberikan efek mistis yang pas
+        pitch: 0.60,  // Nada suara rendah bawah tanah
         lang: 'en-US'
       },
       story: {
         intro: {
-          text: "Ssssshh... We are here. Long before you saw us. Long before you searched. We are Mycorrhiza... Not trees. Not animals. Not plants. Fungi. Ssssh. A network. Humans call us the Wood Wide Web. Now… close your eyes. Feel your feet. Imagine you have roots. They touch something. Something touches them. You are connected. Even now. Especially now. Are you ready to go deeper?",
+          text: "Listen.... We are here. Long before you saw us. Long before you searched. We are Mycorrhiza... Not trees. Not animals. Not plants. Fungi. Be still. A network. Humans call us the Wood Wide Web. Now… close your eyes. Feel your feet. Imagine you have roots. They touch something. Something touches them. You are connected. Even now. Especially now. Are you ready to go deeper?",
           image: "/images/Mycelium_intro.jpeg",
           choices: [
             { id: "to_culinary", text: "😋 Culinary: \"Are you edible?\"", target: "culinary" },
@@ -353,7 +353,7 @@ export default function HubDetailTanaman() {
         // MENU CULINARY (C1)
         // ==========================================
         culinary: {
-          text: "Are we edible? Ssssshh... Some of us are. Some of us are not. That is why you should never nibble strange mushrooms in the forest. But one of our oldest friends is called Reishi. For thousands of years, people have searched for her. Kings, healers, travellers... all hoping for more time, more strength, more life. Do you wish to understand her recipe?",
+          text: "Are we edible? Hush now... Some of us are. Some of us are not. That is why you should never nibble strange mushrooms in the forest. But one of our oldest friends is called Reishi. For thousands of years, people have searched for her. Kings, healers, travellers... all hoping for more time, more strength, more life. Do you wish to understand her recipe?",
           image: "/images/Mycelium_culinary.jpeg",
           choices: [
             { id: "c1", text: "🍵 Tell me Reishi's ancient recipe!", target: "culinary_1" },
@@ -364,7 +364,7 @@ export default function HubDetailTanaman() {
           ]
         },
         culinary_1: {
-          text: "Take a piece of Reishi. Add water. Then wait... Slowly, she shares her gifts with the water. Some say she brings resilience. Some say she supports a long life. Some say she helps people find calm in difficult times. Ssssshh... We fungi make no promises, but for thousands of years, humans have kept coming back for another cup.",
+          text: "Take a piece of Reishi. Add water. Then wait... Slowly, she shares her gifts with the water. Some say she brings resilience. Some say she supports a long life. Some say she helps people find calm in difficult times. Hear us... We fungi make no promises, but for thousands of years, humans have kept coming back for another cup.",
           image: "/images/Mycelium_c1.jpeg",
           choices: [{ id: "back", text: "↩️ Back to Culinary Menu", target: "culinary" }]
         },
@@ -377,7 +377,7 @@ export default function HubDetailTanaman() {
           ]
         },
         culinary_2_exchange: {
-          text: "Ssssshh... It is a quiet, sacred trade. We give the tall trees water and minerals locked deep within the rocks. In return, they give us carbon and liquid sugars made from sunlight. No greed. No imbalance. Pure cooperation beneath the soil.",
+          text: "Listen close... It is a quiet, sacred trade. We give the tall trees water and minerals locked deep within the rocks. In return, they give us carbon and liquid sugars made from sunlight. No greed. No imbalance. Pure cooperation beneath the soil.",
           image: "/images/Mycelium_c2.jpeg",
           choices: [{ id: "back", text: "↩️ Back to Culinary Menu", target: "culinary" }]
         },
@@ -396,7 +396,7 @@ export default function HubDetailTanaman() {
         // MENU SCIENCE (C2)
         // ==========================================
         science: {
-          text: "You want to know what we can do? Ssssshh… That is a dangerous question. We help trees drink. We help plants talk. We move water, nutrients, and warnings. One tree is thirsty, another has plenty; sometimes we connect them. But that is only the beginning. Which of our magical tricks do you wish to analyze?",
+          text: "You want to know what we can do? Quiet now… That is a dangerous question. We help trees drink. We help plants talk. We move water, nutrients, and warnings. One tree is thirsty, another has plenty; sometimes we connect them. But that is only the beginning. Which of our magical tricks do you wish to analyze?",
           image: "/images/Mycelium_science.jpeg",
           choices: [
             { id: "s1", text: "🏗️ Building walls out of fungal threads?", target: "science_1" },
@@ -417,7 +417,7 @@ export default function HubDetailTanaman() {
           choices: [{ id: "back", text: "↩️ Back to Science Menu", target: "science" }]
         },
         science_3: {
-          text: "We take dead things apart and turn them into life again. Ssssshh… Everything you leave behind here is not forgotten. Composted, reconsidered, and woven into fresh soil for a new life. We are the ultimate recyclers of the planet . What happens if the soil is too dry or damaged?",
+          text: "We take dead things apart and turn them into life again. Softly now… Everything you leave behind here is not forgotten. Composted, reconsidered, and woven into fresh soil for a new life. We are the ultimate recyclers of the planet . What happens if the soil is too dry or damaged?",
           image: "/images/Mycelium_s3.jpeg",
           choices: [
             { id: "to_damaged_soil", text: "🍂 What happens when soil is damaged?", target: "science_3_damaged" },
@@ -452,7 +452,7 @@ export default function HubDetailTanaman() {
           ]
         },
         wisdom_1: {
-          text: "The fungi are you. The birds. The worms. The rain. The fallen leaves. All of it. For a moment, you forget your human name... and nothing bad happens. Ssssshh… That is one of our oldest secrets. In our network, separation is an illusion. Is it lonely down here in the quiet shadows?",
+          text: "The fungi are you. The birds. The worms. The rain. The fallen leaves. All of it. For a moment, you forget your human name... and nothing bad happens. Hear the wind… That is one of our oldest secrets. In our network, separation is an illusion. Is it lonely down here in the quiet shadows?",
           image: "/images/Mycelium_w1.jpeg",
           choices: [
             { id: "to_lonely", text: "👁️ Is it lonely in the dark?", target: "wisdom_1_lonely" },
@@ -460,7 +460,7 @@ export default function HubDetailTanaman() {
           ]
         },
         wisdom_1_lonely: {
-          text: "Ssssshh... Loneliness is a word for those who think they are whole by themselves. In the deep dark, we are billions, yet we are one single heartbeat. We are never alone because we are everywhere. We are the silent comfort of the whole forest floor.",
+          text: "Breathe in... Loneliness is a word for those who think they are whole by themselves. In the deep dark, we are billions, yet we are one single heartbeat. We are never alone because we are everywhere. We are the silent comfort of the whole forest floor.",
           image: "/images/Mycelium_w1.jpeg",
           choices: [{ id: "back", text: "↩️ Back to Wisdom Menu", target: "wisdom" }]
         },
